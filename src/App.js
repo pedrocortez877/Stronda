@@ -1,7 +1,13 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { Operations } from "./pages/Operations";
+
 function App() {
-  return (
-    <div className="App">Header</div>
-  );
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Operations />} />
+    </Routes>
+  </BrowserRouter>
 }
 
 export default App;
