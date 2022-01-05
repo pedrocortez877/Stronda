@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --background_dark: #1c1c1c;
+  --background_light: #252525;
+  --primary: #1ab04c;
+  --primary40: rgba(26, 176, 76, 0.4);
+  --primary70: rgba(26, 176, 76, 0.7);
+  --gray: #8d8d8d;
+  --gray-light: #d8d8d8;
+}
