@@ -15,7 +15,6 @@ import {
 } from './styles';
 
 export function Operations(){
-  // Modal state
   const { modalOpen, close, open } = useModal();
 
   function openBasicSaleReport(){
