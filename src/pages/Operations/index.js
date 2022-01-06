@@ -1,11 +1,7 @@
 import { Sidebar } from '../../components/Sidebar';
 import { CardOperation } from  '../../components/CardOperation';
-import useModal from '../../hooks/useModal';
-import Modal from '../../components/Modal';
 
-import { ModalContainer } from '../../config/modalContainer';
-
-import '../../styles/index.css';
+import '../../styles/global.css';
 
 import { 
   Container, 
@@ -15,17 +11,14 @@ import {
 } from './styles';
 
 export function Operations(){
-  const { modalOpen, close, open } = useModal();
 
   function openBasicSaleReport(){
   }
 
   function openBasicPurchasedReport(){
-
   }
 
   function openScreenPurchasedProduct(){
-
   }
 
   return (
@@ -64,11 +57,6 @@ export function Operations(){
             onClick={openScreenPurchasedProduct}
           />
         </RowReportMonthAndPurchase>
-        <ModalContainer label="">
-          {modalOpen && (
-            <Modal modalOpen={modalOpen} modalSaleProduct={true} handleClose={close} />
-          )}
-        </ModalContainer>
       </ScreenOperation>
     </Container>
   );
