@@ -1,60 +1,54 @@
-import { Sidebar } from '../../components/Sidebar';
-import { CardOperation } from  '../../components/CardOperation';
+import { Sidebar } from "../../components/Sidebar";
+import { CardOperation } from "../../components/CardOperation";
 
-import '../../styles/global.css';
+import "../../styles/global.css";
 
-import { 
-  Container, 
+import {
+  Container,
   ScreenOperation,
   RowReportDayAndSale,
-  RowReportMonthAndPurchase
-} from './styles';
+  RowReportMonthAndPurchase,
+} from "./styles";
 
-export function Operations(){
+export function Operations() {
+  function openBasicSaleReport() {}
 
-  function openBasicSaleReport(){
-  }
-
-  function openBasicPurchasedReport(){
-  }
-
-  function openScreenPurchasedProduct(){
-  }
+  function openBasicPurchasedReport() {}
 
   return (
     <Container>
       <Sidebar />
       <ScreenOperation>
         <RowReportDayAndSale>
-          <CardOperation 
+          <CardOperation
             title="Relatório básico de vendas"
             isCardReport
             isCardPurchased={false}
-            valueSaleDay={2220.90}
-            valueSaleMonth={32222.20}
+            valueSaleDay={2220.9}
+            valueSaleMonth={32222.2}
             onClick={openBasicSaleReport}
           />
-          <CardOperation 
+          <CardOperation
             title="Controle de vendas"
             isCardReport={false}
             isCardPurchased={false}
-            onClick={open}
+            onClick={() => {}}
           />
         </RowReportDayAndSale>
         <RowReportMonthAndPurchase>
-        <CardOperation 
+          <CardOperation
             title="Relatório básico de compras"
             isCardReport
             isCardPurchased
-            valuePurchasedDay={2220.90}
-            valuePurchasedMonth={32222.20}
+            valuePurchasedDay={2220.9}
+            valuePurchasedMonth={32222.2}
             onClick={openBasicPurchasedReport}
           />
-          <CardOperation 
+          <CardOperation
             title="Controle de compras"
             isCardReport={false}
             isCardPurchased
-            onClick={openScreenPurchasedProduct}
+            onClick={() => {}}
           />
         </RowReportMonthAndPurchase>
       </ScreenOperation>

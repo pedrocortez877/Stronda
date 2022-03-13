@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Card = styled.div`
   width: 500px;
@@ -26,9 +26,7 @@ export const TitleCard = styled.p`
   padding-top: 8px;
 `;
 
-export const BodyCard = styled.div`
-
-`;
+export const BodyCard = styled.div``;
 
 export const RowCard = styled.div`
   display: flex;
@@ -41,7 +39,7 @@ export const DescriptionCardReport = styled.span`
   font-family: Roboto, sans-serif;
   font-size: 18px;
   color: var(--gray-light);
-  
+
   padding: 10px;
 `;
 
@@ -50,7 +48,7 @@ export const ValueCardReport = styled.span`
   font-size: 22px;
   font-weight: bold;
   color: var(--primary);
-  
+
   padding: 5px;
 `;
 

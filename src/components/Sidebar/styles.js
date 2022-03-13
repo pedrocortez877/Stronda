@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SideBar = styled.div`
   height: 100%;
@@ -45,7 +45,7 @@ export const LinkToPage = styled.a`
   color: var(--primary);
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     color: var(--primary);
   }
 `;
@@ -56,7 +56,7 @@ export const LinksName = styled.span`
   color: var(--gray);
   transition: 0.2s;
   padding-left: 8px;
-  &:hover{
+  &:hover {
     color: var(--gray-light);
   }
 `;
