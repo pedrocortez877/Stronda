@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Sidebar } from "../../components/Sidebar";
 import { CardOperation } from "../../components/CardOperation";
 
@@ -11,6 +13,8 @@ import {
 } from "./styles";
 
 export function Operations() {
+  const navigation = useNavigate();
+
   function openBasicSaleReport() {}
 
   function openBasicPurchasedReport() {}
@@ -32,7 +36,7 @@ export function Operations() {
             title="Controle de vendas"
             isCardReport={false}
             isCardPurchased={false}
-            onClick={() => {}}
+            onClick={() => navigation("/productSale")}
           />
         </RowReportDayAndSale>
         <RowReportMonthAndPurchase>
