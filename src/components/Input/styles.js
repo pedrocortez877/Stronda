@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.input`
   border: 2px solid var(--primary40);
@@ -8,15 +8,23 @@ export const Container = styled.input`
 
   color: var(--gray);
 
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: var(--gray-dark);
+  }
+  :-ms-input-placeholder {
+    color: var(--gray-dark);
+  }
+
   background: none;
 
   display: block;
   text-align: center;
 
-  margin: 20px auto;
-  padding: 10px 10px;
+  margin: 5px auto;
+  padding: 7px 7px;
 
-  width: 250px;
+  width: ${(props) => props.Width};
 
   outline: none;
 
@@ -24,14 +32,14 @@ export const Container = styled.input`
   transition: 0.25s;
 
   &:focus {
-    width: 300px;
+    width: ${(props) => (props.Width === "180px" ? "220px" : "300px")};
     border-color: var(--primary);
   }
 
-  @media(max-width: 1320px){
-    width: 220px;
+  @media (max-width: 1320px) {
+    width: ${(props) => props.Width};
     &:focus {
-      width: 230px;
+      width: ${(props) => (props.Width === "180px" ? "220px" : "300px")};
       border-color: var(--primary);
     }
   }
