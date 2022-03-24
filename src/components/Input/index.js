@@ -1,17 +1,20 @@
-import { Container } from './styles';
+import { Container } from "./styles";
 
 export function Input(properties) {
-  return(
+  return (
     <>
-      {properties.isPassword ? 
-        (
-          <Container type="password" width={properties.width} placeholder={properties.placeholder}/>
-        )
-        :
-        (
-          <Container width={properties.width} placeholder={properties.placeholder}/>
-        )
-      }
+      {properties.isPassword ? (
+        <Container
+          type="password"
+          Width={properties.width}
+          placeholder={properties.placeholder}
+        />
+      ) : (
+        <Container
+          Width={properties.width}
+          placeholder={properties.placeholder}
+        />
+      )}
     </>
   );
 }
