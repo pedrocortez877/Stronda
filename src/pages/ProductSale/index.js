@@ -1,5 +1,9 @@
+import { useEffect, useState } from "react";
+
 import { Sidebar } from "../../components/Sidebar";
 import { Input } from "../../components/Input";
+import { ItemList } from "../../components/ItemList";
+
 import {
   Container,
   ScreenOperation,
@@ -15,9 +19,72 @@ import {
   RadioButtonTypePerson,
   RadioButtonTypePersonLabel,
   LabelInputs,
+  ProductsListArea,
 } from "./styles";
 
 export function ProductSale() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    setProducts([
+      {
+        Name: "Alto Falante 6x9",
+        Brand: "Pionner",
+        SaleValue: 899.99,
+        Quantity: 1,
+        TotalValue: 899.99,
+      },
+      {
+        Name: "Potência 40000",
+        Brand: "Taramps",
+        SaleValue: 7626.99,
+        Quantity: 1,
+        TotalValue: 7626.99,
+      },
+      {
+        Name: "Fio 20mm",
+        Brand: "Tecnoise",
+        SaleValue: 98.99,
+        Quantity: 1,
+        TotalValue: 98.99,
+      },
+      {
+        Name: "Travas",
+        Brand: "Fiat",
+        SaleValue: 599.98,
+        Quantity: 1,
+        TotalValue: 599.98,
+      },
+      {
+        Name: "Vidros",
+        Brand: "Fiat",
+        SaleValue: 599.98,
+        Quantity: 1,
+        TotalValue: 599.98,
+      },
+      {
+        Name: "Maçaneta",
+        Brand: "Fiat",
+        SaleValue: 599.98,
+        Quantity: 1,
+        TotalValue: 599.98,
+      },
+      {
+        Name: "Limpador",
+        Brand: "Fiat",
+        SaleValue: 599.98,
+        Quantity: 1,
+        TotalValue: 599.98,
+      },
+      {
+        Name: "Chave",
+        Brand: "Fiat",
+        SaleValue: 599.98,
+        Quantity: 1,
+        TotalValue: 599.98,
+      },
+    ]);
+  }, []);
   return (
     <Container>
       <Sidebar />
@@ -117,10 +184,16 @@ export function ProductSale() {
               </InputsArea>
             </LineCustomerInformations>
           </Section>
+          <CustomerTitleArea>
+            <CustomerTitle>Produtos</CustomerTitle>
+          </CustomerTitleArea>
           <Section>
-            <CustomerTitleArea>
-              <CustomerTitle>Produtos</CustomerTitle>
-            </CustomerTitleArea>
+            <ProductsListArea>
+              <ItemList />
+              {products.map((product) => (
+                <ItemList key={product.Name} product={product} />
+              ))}
+            </ProductsListArea>
           </Section>
         </SalesDashboard>
       </ScreenOperation>

@@ -48,7 +48,7 @@ export const SalesDashboardTitle = styled.h1`
 export const Section = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: ${(props) => (props.alignItems ? props.alignItems : "center")};
 
   width: 100%;
 
@@ -122,4 +122,25 @@ export const LabelInputs = styled.label`
   font-weight: bold;
 
   padding-left: ${(props) => (props.paddingLeft ? props.paddingLeft : "")};
+`;
+
+export const ProductsListArea = styled.div`
+  width: 90%;
+
+  border: 3px solid var(--primary20);
+  border-radius: 15px;
+
+  max-height: 150px;
+
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--gray-dark);
+    border-radius: 3px;
+  }
 `;
