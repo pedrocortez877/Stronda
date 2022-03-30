@@ -52,7 +52,7 @@ export const Section = styled.div`
 
   width: 100%;
 
-  margin: 0 auto;
+  margin: ${(props) => (props.marginTop ? props.marginTop : "0 auto")};
 
   flex-direction: column;
 `;
@@ -142,5 +142,24 @@ export const ProductsListArea = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: var(--gray-dark);
     border-radius: 3px;
+  }
+`;
+
+export const ButtonConfirmSale = styled.button`
+  background: none;
+  width: 180px;
+  height: 40px;
+
+  border: 3px solid var(--primary40);
+  border-radius: 14px;
+
+  font-size: 16px;
+  color: var(--gray);
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--primary20);
+    color: var(--gray-light);
   }
 `;

@@ -20,6 +20,7 @@ import {
   RadioButtonTypePersonLabel,
   LabelInputs,
   ProductsListArea,
+  ButtonConfirmSale,
 } from "./styles";
 
 export function ProductSale() {
@@ -194,6 +195,45 @@ export function ProductSale() {
                 <ItemList key={product.Name} product={product} />
               ))}
             </ProductsListArea>
+          </Section>
+          <Section marginTop="20px">
+            <LineCustomerInformations>
+              <InputsArea>
+                <LabelInputs paddingLeft="40px">Valor total:</LabelInputs>
+                <Input
+                  isPassword={false}
+                  placeholder="R$8283,90"
+                  width="190px"
+                />
+              </InputsArea>
+              <InputsArea>
+                <LabelInputs paddingLeft="40px">Desconto %:</LabelInputs>
+                <Input isPassword={false} placeholder="10%" width="190px" />
+              </InputsArea>
+              <InputsArea>
+                <LabelInputs paddingLeft="22px">Valor desconto:</LabelInputs>
+                <Input
+                  isPassword={false}
+                  placeholder="R$828,39"
+                  width="190px"
+                />
+              </InputsArea>
+              <InputsArea>
+                <LabelInputs paddingLeft="35px">Valor líquido:</LabelInputs>
+                <Input
+                  isPassword={false}
+                  placeholder="R$7455,51"
+                  width="190px"
+                />
+              </InputsArea>
+            </LineCustomerInformations>
+          </Section>
+          <Section marginTop="20px">
+            <LineCustomerInformations>
+              <InputsArea>
+                <ButtonConfirmSale>Finalizar venda</ButtonConfirmSale>
+              </InputsArea>
+            </LineCustomerInformations>
           </Section>
         </SalesDashboard>
       </ScreenOperation>
