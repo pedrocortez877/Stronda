@@ -1,19 +1,37 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import {
+  Typography,
+  Modal,
+  Grid,
+  TextField,
+  Autocomplete,
+} from "@mui/material";
+import { useState } from "react";
+
+import { sxContainer, sxTitleContainer, sxTextInput } from "./styles";
 
 export function ModalComponent({ open, toggle }) {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
+  const [products] = useState([
+    {
+      name: "Potência potente",
+      brand: "Taramps",
+    },
+    {
+      name: "Falante que fala",
+      brand: "Pionner",
+    },
+    {
+      name: "Radio que irradia",
+      brand: "Não lembro",
+    },
+    {
+      name: "Fio 70mm",
+      brand: "Tecnoise",
+    },
+    {
+      name: "Madeira",
+      brand: "MDF",
+    },
+  ]);
 
   return (
     <Modal
@@ -22,14 +40,23 @@ export function ModalComponent({ open, toggle }) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
-      </Box>
+      <Grid container spacing={2} sx={sxContainer}>
+        <Grid item xs={12}>
+          <Typography id="modal-modal-title" sx={sxTitleContainer}>
+            Adicione um produto
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Autocomplete
+            id="cmb_products"
+            product
+            options={products.map((product) => product.name)}
+            renderInput={(params) => (
+              <TextField {...params} label="Produto" sx={sxTextInput} />
+            )}
+          />
+        </Grid>
+      </Grid>
     </Modal>
   );
 }
