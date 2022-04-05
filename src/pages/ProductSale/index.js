@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
 import { Sidebar } from "../../components/Sidebar";
 import { Input } from "../../components/Input";
 import { ItemList } from "../../components/ItemList";
+
+import IconPlus from "../../assets/plus.png";
 
 import {
   Container,
@@ -21,10 +27,35 @@ import {
   LabelInputs,
   ProductsListArea,
   ButtonConfirmSale,
+  IconAddProduct,
+  ButtonAddProduct,
 } from "./styles";
 
 export function ProductSale() {
   const [products, setProducts] = useState([]);
+
+  const [select, setSelect] = useState("NATURAL_PERSON");
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelect(value);
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   useEffect(() => {
     setProducts([
@@ -105,11 +136,23 @@ export function ProductSale() {
                   <RadioButtonTypePersonLabel>
                     Física
                   </RadioButtonTypePersonLabel>
-                  <RadioButtonTypePerson type="radio" />
+                  <RadioButtonTypePerson
+                    type="radio"
+                    name="radio"
+                    value="NATURAL_PERSON"
+                    checked={select === "NATURAL_PERSON"}
+                    onChange={(event) => handleSelectChange(event)}
+                  />
                   <RadioButtonTypePersonLabel>
                     Jurídica
                   </RadioButtonTypePersonLabel>
-                  <RadioButtonTypePerson type="radio" />
+                  <RadioButtonTypePerson
+                    type="radio"
+                    name="radio"
+                    value="LEGAL_PERSON"
+                    checked={select === "LEGAL_PERSON"}
+                    onChange={(event) => handleSelectChange(event)}
+                  />
                 </RadioButtonArea>
               </InputsArea>
               <InputsArea>
@@ -125,7 +168,7 @@ export function ProductSale() {
                 <Input
                   isPassword={false}
                   placeholder="Aderbal Pereira"
-                  width="250px"
+                  width="290px"
                 />
               </InputsArea>
               <InputsArea>
@@ -188,13 +231,16 @@ export function ProductSale() {
           <CustomerTitleArea>
             <CustomerTitle>Produtos</CustomerTitle>
           </CustomerTitleArea>
-          <Section>
+          <Section flexDirection="row">
             <ProductsListArea>
               <ItemList />
               {products.map((product) => (
                 <ItemList key={product.Name} product={product} />
               ))}
             </ProductsListArea>
+            <ButtonAddProduct>
+              <IconAddProduct src={IconPlus} onClick={handleOpen} />
+            </ButtonAddProduct>
           </Section>
           <Section marginTop="20px">
             <LineCustomerInformations>
@@ -237,6 +283,21 @@ export function ProductSale() {
           </Section>
         </SalesDashboard>
       </ScreenOperation>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
     </Container>
   );
 }

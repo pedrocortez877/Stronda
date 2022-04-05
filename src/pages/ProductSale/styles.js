@@ -54,7 +54,8 @@ export const Section = styled.div`
 
   margin: ${(props) => (props.marginTop ? props.marginTop : "0 auto")};
 
-  flex-direction: column;
+  flex-direction: ${(props) =>
+    props.flexDirection ? props.flexDirection : "column"};
 `;
 
 export const CustomerTitleArea = styled.div`
@@ -104,15 +105,35 @@ export const RadioButtonTypePersonLabel = styled.label`
 `;
 
 export const RadioButtonTypePerson = styled.input`
-  margin: 10px;
+  appearance: none;
 
-  z-index: 1;
+  margin: 6px;
 
+  border: 2px solid var(--primary70);
   border-radius: 50%;
+
   width: 16px;
   height: 16px;
 
-  background-color: var(--background-light);
+  cursor: pointer;
+
+  display: grid;
+  place-content: center;
+
+  &:before {
+    content: "";
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--form-control-color);
+  }
+
+  &:checked:before {
+    transform: scale(1);
+    background-color: var(--gray);
+  }
 `;
 
 export const LabelInputs = styled.label`
@@ -162,4 +183,21 @@ export const ButtonConfirmSale = styled.button`
     background-color: var(--primary20);
     color: var(--gray-light);
   }
+`;
+
+export const ButtonAddProduct = styled.button`
+  background: none;
+  border: none;
+
+  align-self: flex-start;
+
+  margin-left: 20px;
+  margin-top: 5px;
+
+  cursor: pointer;
+`;
+
+export const IconAddProduct = styled.img`
+  width: 30px;
+  height: 30px;
 `;

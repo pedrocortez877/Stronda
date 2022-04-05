@@ -32,14 +32,11 @@ export const Container = styled.input`
   transition: 0.25s;
 
   &:focus {
-    width: ${(props) => (props.Width === "180px" ? "220px" : "300px")};
     border-color: var(--primary);
   }
 
   @media (max-width: 1320px) {
-    width: ${(props) => props.Width};
     &:focus {
-      width: ${(props) => (props.Width === "180px" ? "220px" : "300px")};
       border-color: var(--primary);
     }
   }
