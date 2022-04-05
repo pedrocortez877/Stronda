@@ -1,10 +1,9 @@
 import { useState } from "react";
 
-export function useModal() {
+export const useModal = () => {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const toggle = () => setOpen(!open);
 
-  return [open, handleOpen, handleClose];
-}
+  return [open, toggle];
+};
