@@ -3,14 +3,13 @@ export const sxContainer = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 600,
   bgcolor: "var(--background_light)",
   border: "2px solid var(--gray-dark)",
   borderRadius: "10px",
   boxShadow: 24,
   paddingTop: 1,
   paddingRight: 2,
-  paddingLeft: 2,
   paddingBottom: 2,
 };
 
@@ -22,12 +21,3 @@ export const sxTitleContainer = {
   fontSize: "22px",
   fontWeight: "bold",
 };
-
-export const sxTextInput = () => ({
-  textField: {
-    backgroundColor: "none",
-  },
-  input: {
-    color: "var(--gray-light)",
-  },
-});
