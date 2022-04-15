@@ -21,7 +21,40 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          forcedColorAdjust: "primary",
+          "& label": {
+            color: "white",
+          },
+          "& input": {
+            color: "grey",
+          },
+          "& .MuiInput-underline:after": {
+            borderBottomColor: "yellow",
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "green",
+            },
+          },
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          "& label": {
+            color: "white",
+          },
+          "& input": {
+            color: "grey",
+          },
+          "& .MuiInput-underline:after": {
+            borderBottomColor: "yellow",
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "green",
+            },
+          },
         },
       },
     },
@@ -51,6 +84,18 @@ export function ModalComponent({ open, toggle }) {
       brand: "MDF",
     },
   ]);
+  const [brand, setBrand] = useState("");
+  const [value, setValue] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  function handleInputs(e) {
+    console.log(e);
+    setBrand("Teste");
+    setValue(2);
+    setQuantity(1);
+    setTotal(1);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,23 +120,22 @@ export function ModalComponent({ open, toggle }) {
                 <TextField {...params} label="Produto" />
               )}
               color="primary"
+              onSelect={handleInputs}
             />
           </Grid>
           <Grid item xs={3}>
             <TextField
-              disabled
               id="outlined-disabled"
               label="Marca"
-              defaultValue="Taramps"
+              defaultValue={brand}
               color="primary"
             />
           </Grid>
           <Grid item xs={3}>
             <TextField
-              disabled
               id="outlined-disabled"
               label="Valor"
-              defaultValue="R$900,00"
+              defaultValue={value}
               color="primary"
             />
           </Grid>
@@ -99,7 +143,7 @@ export function ModalComponent({ open, toggle }) {
             <TextField
               id="outlined-disabled"
               label="Quantidade"
-              defaultValue="1"
+              defaultValue={quantity}
               color="primary"
             />
           </Grid>
@@ -107,7 +151,7 @@ export function ModalComponent({ open, toggle }) {
             <TextField
               id="outlined-disabled"
               label="Total"
-              defaultValue="R$900,00"
+              defaultValue={total}
               color="primary"
             />
           </Grid>

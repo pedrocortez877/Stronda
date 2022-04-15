@@ -16,7 +16,7 @@ export const sxContainer = {
 export const sxTitleContainer = {
   textAlign: "center",
 
-  color: "var(--primary)",
+  color: "var(--primary70)",
 
   fontSize: "22px",
   fontWeight: "bold",
