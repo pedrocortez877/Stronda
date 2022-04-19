@@ -12,7 +12,8 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "warn",
-    "semi-colon": "off"
+    "semi-colon": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "e" }]
   },
   "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {

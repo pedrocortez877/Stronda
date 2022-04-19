@@ -7,81 +7,36 @@ import {
   Autocomplete,
   Button,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
-import { sxContainer, sxTitleContainer } from "./styles";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "rgba(26, 176, 76, 0.7)",
-    },
-  },
-  components: {
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          "& label": {
-            color: "white",
-          },
-          "& input": {
-            color: "grey",
-          },
-          "& .MuiInput-underline:after": {
-            borderBottomColor: "yellow",
-          },
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "green",
-            },
-          },
-        },
-      },
-    },
-    MuiAutocomplete: {
-      styleOverrides: {
-        root: {
-          "& label": {
-            color: "white",
-          },
-          "& input": {
-            color: "grey",
-          },
-          "& .MuiInput-underline:after": {
-            borderBottomColor: "yellow",
-          },
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "green",
-            },
-          },
-        },
-      },
-    },
-  },
-});
+import { sxContainer, sxTitleContainer, theme } from "./styles";
 
 export function ModalComponent({ open, toggle }) {
   const [products] = useState([
     {
       name: "Potência potente",
       brand: "Taramps",
+      value: 888.9,
     },
     {
       name: "Falante que fala",
       brand: "Pionner",
+      value: 888.9,
     },
     {
       name: "Radio que irradia",
       brand: "Não lembro",
+      value: 888.9,
     },
     {
       name: "Fio 70mm",
       brand: "Tecnoise",
+      value: 888.9,
     },
     {
       name: "Madeira",
       brand: "MDF",
+      value: 888.9,
     },
   ]);
   const [brand, setBrand] = useState("");
@@ -89,12 +44,14 @@ export function ModalComponent({ open, toggle }) {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
 
-  function handleInputs(e) {
-    console.log(e);
-    setBrand("Teste");
-    setValue(2);
+  function handleInputs(e, valueSelected) {
+    const selectedProduct = products.find(
+      (product) => product.name === valueSelected
+    );
+    setBrand(selectedProduct.brand);
+    setValue(selectedProduct.value);
     setQuantity(1);
-    setTotal(1);
+    setTotal(quantity * value);
   }
 
   return (
@@ -120,39 +77,39 @@ export function ModalComponent({ open, toggle }) {
                 <TextField {...params} label="Produto" />
               )}
               color="primary"
-              onSelect={handleInputs}
+              onChange={handleInputs}
             />
           </Grid>
           <Grid item xs={3}>
             <TextField
               id="outlined-disabled"
               label="Marca"
-              defaultValue={brand}
               color="primary"
+              value={brand}
             />
           </Grid>
           <Grid item xs={3}>
             <TextField
               id="outlined-disabled"
               label="Valor"
-              defaultValue={value}
               color="primary"
+              value={value}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               id="outlined-disabled"
               label="Quantidade"
-              defaultValue={quantity}
               color="primary"
+              value={quantity}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               id="outlined-disabled"
               label="Total"
-              defaultValue={total}
               color="primary"
+              value={total}
             />
           </Grid>
           <Grid item xs={4} />
