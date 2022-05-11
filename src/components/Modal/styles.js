@@ -71,5 +71,25 @@ export const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "& label": {
+            color: "grey",
+          },
+          "& .MuiOutlinedInput-input": {
+            color: "white",
+          },
+          "& .MuiInput-underline:after": {
+            borderBottomColor: "yellow",
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "rgba(26, 176, 76, 0.7)",
+            },
+          },
+        },
+      },
+    },
   },
 });

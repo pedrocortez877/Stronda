@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 
 import { Sidebar } from "../../components/Sidebar";
 import { Input } from "../../components/Input";
@@ -6,6 +6,8 @@ import { ItemList } from "../../components/ItemList";
 import { ModalComponent } from "../../components/Modal";
 
 import { useModal } from "../../hooks/useModal";
+
+import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
 
 import IconPlus from "../../assets/plus.png";
 
@@ -31,7 +33,7 @@ import {
 } from "./styles";
 
 export function ProductSale() {
-  const [products, setProducts] = useState([]);
+  const { products } = useContext(ProductOfASaleContext);
 
   const [select, setSelect] = useState("NATURAL_PERSON");
 
@@ -42,66 +44,6 @@ export function ProductSale() {
     setSelect(value);
   };
 
-  useEffect(() => {
-    setProducts([
-      {
-        Name: "Alto Falante 6x9",
-        Brand: "Pionner",
-        SaleValue: 899.99,
-        Quantity: 1,
-        TotalValue: 899.99,
-      },
-      {
-        Name: "Potência 40000",
-        Brand: "Taramps",
-        SaleValue: 7626.99,
-        Quantity: 1,
-        TotalValue: 7626.99,
-      },
-      {
-        Name: "Fio 20mm",
-        Brand: "Tecnoise",
-        SaleValue: 98.99,
-        Quantity: 1,
-        TotalValue: 98.99,
-      },
-      {
-        Name: "Travas",
-        Brand: "Fiat",
-        SaleValue: 599.98,
-        Quantity: 1,
-        TotalValue: 599.98,
-      },
-      {
-        Name: "Vidros",
-        Brand: "Fiat",
-        SaleValue: 599.98,
-        Quantity: 1,
-        TotalValue: 599.98,
-      },
-      {
-        Name: "Maçaneta",
-        Brand: "Fiat",
-        SaleValue: 599.98,
-        Quantity: 1,
-        TotalValue: 599.98,
-      },
-      {
-        Name: "Limpador",
-        Brand: "Fiat",
-        SaleValue: 599.98,
-        Quantity: 1,
-        TotalValue: 599.98,
-      },
-      {
-        Name: "Chave",
-        Brand: "Fiat",
-        SaleValue: 599.98,
-        Quantity: 1,
-        TotalValue: 599.98,
-      },
-    ]);
-  }, []);
   return (
     <Container>
       <Sidebar />
