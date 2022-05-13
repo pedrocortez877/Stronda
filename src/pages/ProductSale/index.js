@@ -35,6 +35,10 @@ import {
 export function ProductSale() {
   const { products } = useContext(ProductOfASaleContext);
 
+  useState(() => {
+    console.log(products);
+  }, [products]);
+
   const [select, setSelect] = useState("NATURAL_PERSON");
 
   const [open, toggle] = useModal();
@@ -162,7 +166,7 @@ export function ProductSale() {
             <ProductsListArea>
               <ItemList />
               {products.map((product) => (
-                <ItemList key={product.Name} product={product} />
+                <ItemList key={product.Id} product={product} />
               ))}
             </ProductsListArea>
             <ButtonAddProduct>

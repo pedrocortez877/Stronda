@@ -5,8 +5,8 @@ export function ItemList(props) {
   const { product } = props;
 
   if (product) {
-    product.SaleValue = product.SaleValue.toString().replace(".", ",");
-    product.TotalValue = product.TotalValue.toString().replace(".", ",");
+    product.Value = product.Value.toString().replace(".", ",");
+    product.Total = product.Total.toString().replace(".", ",");
   }
 
   return (
@@ -20,13 +20,13 @@ export function ItemList(props) {
             <Text>{product.Brand}</Text>
           </TextArea>
           <TextArea>
-            <Text>R${product.SaleValue}</Text>
+            <Text>R${product.Value}</Text>
           </TextArea>
           <TextArea>
             <Text>{product.Quantity}</Text>
           </TextArea>
           <TextArea>
-            <Text>R${product.TotalValue}</Text>
+            <Text>R${product.Total}</Text>
           </TextArea>
           <TextArea>
             <Icon src={CloseImage} />

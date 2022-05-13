@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import {
   Typography,
@@ -8,51 +8,55 @@ import {
   TextField,
   Autocomplete,
   Button,
-  InputAdornment,
-  OutlinedInput,
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
-// import NumberFormat from "react-number-format";
-
 import { sxContainer, sxTitleContainer, theme } from "./styles";
 
-//import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
+import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
 
 export function ModalComponent({ open, toggle }) {
   const [databaseProducts] = useState([
     {
-      name: "Potência potente",
-      brand: "Taramps",
-      value: 888.9,
+      Id: 1,
+      Name: "Potência potente",
+      Brand: "Taramps",
+      Value: 888.9,
     },
     {
-      name: "Falante que fala",
-      brand: "Pionner",
-      value: 888.9,
+      Id: 2,
+      Name: "Falante que fala",
+      Brand: "Pionner",
+      Value: 888.9,
     },
     {
-      name: "Radio que irradia",
-      brand: "Não lembro",
-      value: 888.9,
+      Id: 3,
+      Name: "Radio que irradia",
+      Brand: "Não lembro",
+      Value: 888.9,
     },
     {
-      name: "Fio 70mm",
-      brand: "Tecnoise",
-      value: 888.9,
+      Id: 4,
+      Name: "Fio 70mm",
+      Brand: "Tecnoise",
+      Value: 888.9,
     },
     {
-      name: "Madeira",
-      brand: "MDF",
-      value: 888.9,
+      Id: 5,
+      Name: "Madeira",
+      Brand: "MDF",
+      Value: 888.9,
     },
   ]);
   const [brand, setBrand] = useState("");
   const [value, setValue] = useState(0);
+  const [formatedValue, setFormatedValue] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
+  const [formatedTotal, setFormatedTotal] = useState("");
   const [selectedProduct, setSelectedProduct] = useState({});
-  // const { products, setProducts } = useContext(ProductOfASaleContext);
+
+  const { products, setProducts } = useContext(ProductOfASaleContext);
 
   useEffect(() => {
     clearInputs();
@@ -61,42 +65,69 @@ export function ModalComponent({ open, toggle }) {
   useEffect(() => {
     if (value !== 0) {
       setTotal(quantity * value);
+      setFormatedTotal(`R$${quantity * value}`);
     }
   }, [quantity]);
+
+  useEffect(() => {
+    clearInputs();
+  }, [open]);
 
   function handleChangeAutocomplete(e, valueSelected) {
     if (!valueSelected) {
       clearInputs();
+      return;
     }
 
     const selectedAutocompleteProduct = databaseProducts.find(
-      (product) => product.name === valueSelected
+      (product) => product.Name === valueSelected
     );
 
     setSelectedProduct(selectedAutocompleteProduct);
-    setBrand(selectedAutocompleteProduct.brand);
-    setValue(selectedAutocompleteProduct.value);
+    setBrand(selectedAutocompleteProduct.Brand);
+    setValue(selectedAutocompleteProduct.Value);
+    setFormatedValue(`R$ ${selectedAutocompleteProduct.Value}`);
 
     Object.assign(selectedAutocompleteProduct, {
-      quantity: quantity,
+      Quantity: quantity,
     });
 
     setTotal(
-      Number(selectedAutocompleteProduct.quantity) *
-        Number(selectedAutocompleteProduct.value)
+      Number(selectedAutocompleteProduct.Quantity) *
+        Number(selectedAutocompleteProduct.Value)
     );
-    console.log(selectedProduct);
+    setFormatedTotal(
+      `R$${
+        Number(selectedAutocompleteProduct.Quantity) *
+        Number(selectedAutocompleteProduct.Value)
+      }`
+    );
   }
 
   const handleChangeQuantity = (event) => {
     setQuantity(event.target.value);
   };
 
+  function handleClickAddProduct() {
+    Object.assign(selectedProduct, {
+      Quantity: quantity,
+      Total: total,
+    });
+
+    console.log(selectedProduct);
+
+    setProducts([...products, selectedProduct]);
+
+    console.log("Depois de inserir", products);
+  }
+
   function clearInputs() {
     setBrand("");
     setValue(0);
     setQuantity(1);
     setTotal(0);
+    setFormatedTotal("");
+    setFormatedValue("");
   }
 
   return (
@@ -116,7 +147,7 @@ export function ModalComponent({ open, toggle }) {
           <Grid item xs={6}>
             <Autocomplete
               id="cmb_products"
-              options={databaseProducts.map((product) => product.name)}
+              options={databaseProducts.map((product) => product.Name)}
               renderInput={(params) => (
                 <TextField {...params} label="Produto" />
               )}
@@ -133,14 +164,11 @@ export function ModalComponent({ open, toggle }) {
             />
           </Grid>
           <Grid item xs={3}>
-            <OutlinedInput
+            <TextField
               id="outlined-disabled"
               label="Valor"
               color="primary"
-              value={value}
-              startAdornment={
-                <InputAdornment position="start">R$</InputAdornment>
-              }
+              value={formatedValue}
             />
           </Grid>
           <Grid item xs={6}>
@@ -157,12 +185,14 @@ export function ModalComponent({ open, toggle }) {
               id="outlined-disabled"
               label="Total"
               color="primary"
-              value={total}
+              value={formatedTotal}
             />
           </Grid>
           <Grid item xs={4} />
           <Grid item xs={4}>
-            <Button variant="outlined">Adicionar</Button>
+            <Button variant="outlined" onClick={handleClickAddProduct}>
+              Adicionar
+            </Button>
           </Grid>
           <Grid item xs={4} />
         </Grid>

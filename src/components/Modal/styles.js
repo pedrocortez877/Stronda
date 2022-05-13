@@ -80,14 +80,18 @@ export const theme = createTheme({
           "& .MuiOutlinedInput-input": {
             color: "white",
           },
-          "& .MuiInput-underline:after": {
-            borderBottomColor: "yellow",
-          },
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
               borderColor: "rgba(26, 176, 76, 0.7)",
             },
           },
+        },
+      },
+    },
+    MuiInputAdornment: {
+      styleOverrides: {
+        root: {
+          borderColor: "rgba(26, 176, 76, 0.7)",
         },
       },
     },
