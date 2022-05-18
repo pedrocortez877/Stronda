@@ -8,6 +8,8 @@ import { ModalComponent } from "../../components/Modal";
 
 import { useModal } from "../../hooks/useModal";
 
+import api from "../../configs/api";
+
 import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
 
 import IconPlus from "../../assets/plus.png";
@@ -42,15 +44,15 @@ export function ProductSale() {
   const [phoneNumber, setphoneNumber] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [street, setStreet] = useState("");
-  const [streetNumber, setStreetNumber] = useState(0);
+  const [streetNumber, setStreetNumber] = useState(null);
   const [complement, setComplement] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [totalValue, setTotalValue] = useState(0);
-  const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [discountValue, setDiscountValue] = useState(0);
-  const [liquidValue, setliquidValue] = useState(0);
+  const [totalValue, setTotalValue] = useState(null);
+  const [discountPercentage, setDiscountPercentage] = useState(null);
+  const [discountValue, setDiscountValue] = useState(null);
+  const [liquidValue, setliquidValue] = useState(null);
 
   const [totalValueFormated, setTotalValueFormated] = useState("");
   const [discountPercentageFormated, setDiscountPercentageFormated] =
@@ -64,6 +66,28 @@ export function ProductSale() {
     const value = event.target.value;
     setcustomerType(value);
   };
+
+  async function handleChangeZipCode(event) {
+    const { value } = event.target;
+
+    setZipCode(value);
+
+    if (value.replace("-", "").length === 8) {
+      const responseGetAddressWithZipCode = await api.get(
+        `https://viacep.com.br/ws/${value}/json/`
+      );
+
+      if (!responseGetAddressWithZipCode.data?.erro) {
+        const { bairro, localidade, logradouro, uf } =
+          responseGetAddressWithZipCode.data;
+
+        setStreet(logradouro);
+        setNeighborhood(bairro);
+        setCity(localidade);
+        setState(uf);
+      }
+    }
+  }
 
   return (
     <Container>
@@ -156,6 +180,7 @@ export function ProductSale() {
                   placeholder="14407-347"
                   width="180px"
                   value={zipCode}
+                  onChange={handleChangeZipCode}
                 />
               </InputsArea>
               <InputsArea>
