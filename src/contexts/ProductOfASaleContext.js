@@ -7,7 +7,6 @@ export function ProductOfASaleContextProvider({ children }) {
 
   function addProduct(product) {
     setProducts((products) => [...products, product]);
-    console.log(products);
   }
 
   function removeProduct(product) {

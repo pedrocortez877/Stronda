@@ -35,10 +35,6 @@ import {
 export function ProductSale() {
   const { products } = useContext(ProductOfASaleContext);
 
-  useState(() => {
-    console.log(products);
-  }, [products]);
-
   const [select, setSelect] = useState("NATURAL_PERSON");
 
   const [open, toggle] = useModal();

@@ -114,11 +114,7 @@ export function ModalComponent({ open, toggle }) {
       Total: total,
     });
 
-    console.log(selectedProduct);
-
     setProducts([...products, selectedProduct]);
-
-    console.log("Depois de inserir", products);
   }
 
   function clearInputs() {

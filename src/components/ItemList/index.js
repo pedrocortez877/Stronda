@@ -1,12 +1,25 @@
-import { Container, TextArea, Text, Icon } from "./styles";
+import { useContext } from "react";
+
+import { Container, TextArea, Text, Icon, ButtonDeleteProduct } from "./styles";
 import CloseImage from "../../assets/close.png";
+
+import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
 
 export function ItemList(props) {
   const { product } = props;
+  const { products, setProducts } = useContext(ProductOfASaleContext);
 
   if (product) {
     product.Value = product.Value.toString().replace(".", ",");
     product.Total = product.Total.toString().replace(".", ",");
+  }
+
+  function handleClickDeleteProduct() {
+    setProducts(
+      products.filter((object) => {
+        return object.Id !== product.Id;
+      })
+    );
   }
 
   return (
@@ -28,9 +41,9 @@ export function ItemList(props) {
           <TextArea>
             <Text>R${product.Total}</Text>
           </TextArea>
-          <TextArea>
+          <ButtonDeleteProduct onClick={handleClickDeleteProduct}>
             <Icon src={CloseImage} />
-          </TextArea>
+          </ButtonDeleteProduct>
         </>
       ) : (
         <>

@@ -25,3 +25,14 @@ export const Icon = styled.img`
   height: 16px;
   width: 16px;
 `;
+
+export const ButtonDeleteProduct = styled.button`
+  border: none;
+  text-align: center;
+
+  border-bottom: 1px solid var(--primary20);
+
+  background: none;
+
+  cursor: pointer;
+`;
