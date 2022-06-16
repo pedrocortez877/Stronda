@@ -148,7 +148,9 @@ export const LabelInputs = styled.label`
 export const ProductsListArea = styled.div`
   width: 90%;
 
-  border: 3px solid var(--primary20);
+  border-top: 3px solid var(--primary20);
+  border-left: 3px solid var(--primary20);
+  border-right: 3px solid var(--primary20);
   border-radius: 15px;
 
   max-height: 150px;
