@@ -41,18 +41,18 @@ export function ProductSale() {
   const [customerType, setcustomerType] = useState("NATURAL_PERSON");
   const [documentNumber, setDocumentNumber] = useState("");
   const [customerName, setCustomerName] = useState("");
-  const [phoneNumber, setphoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [street, setStreet] = useState("");
-  const [streetNumber, setStreetNumber] = useState(null);
+  const [streetNumber, setStreetNumber] = useState("");
   const [complement, setComplement] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [totalValue, setTotalValue] = useState(null);
-  const [discountPercentage, setDiscountPercentage] = useState(null);
-  const [discountValue, setDiscountValue] = useState(null);
-  const [liquidValue, setliquidValue] = useState(null);
+  const [totalValue, setTotalValue] = useState(0);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [discountValue, setDiscountValue] = useState(0);
+  const [liquidValue, setliquidValue] = useState(0);
 
   const [totalValueFormated, setTotalValueFormated] = useState("");
   const [discountPercentageFormated, setDiscountPercentageFormated] =
@@ -140,6 +140,7 @@ export function ProductSale() {
                   }
                   width="180px"
                   value={documentNumber}
+                  onChange={(event) => setDocumentNumber(event.target.value)}
                 />
               </InputsArea>
               <InputsArea>
@@ -157,6 +158,7 @@ export function ProductSale() {
                   }
                   width="290px"
                   value={customerName}
+                  onChange={(event) => setCustomerName(event.target.value)}
                 />
               </InputsArea>
               <InputsArea>
@@ -166,6 +168,7 @@ export function ProductSale() {
                   placeholder="(16)99999-9999"
                   width="250px"
                   value={phoneNumber}
+                  onChange={(event) => setPhoneNumber(event.target.value)}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -190,6 +193,7 @@ export function ProductSale() {
                   placeholder="Rua Tobias Dias Fernandes"
                   width="350px"
                   value={street}
+                  onChange={() => {}}
                 />
               </InputsArea>
               <InputsArea>
@@ -199,6 +203,7 @@ export function ProductSale() {
                   placeholder="222"
                   width="90px"
                   value={streetNumber}
+                  onChange={(event) => setStreetNumber(event.target.value)}
                 />
               </InputsArea>
               <InputsArea>
@@ -208,6 +213,7 @@ export function ProductSale() {
                   placeholder="SP"
                   width="250px"
                   value={complement}
+                  onChange={(event) => setComplement(event.target.value)}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -219,6 +225,7 @@ export function ProductSale() {
                   placeholder="Leporace 3"
                   width="330px"
                   value={neighborhood}
+                  onChange={(event) => setNeighborhood(event.target.value)}
                 />
               </InputsArea>
               <InputsArea>
@@ -228,6 +235,7 @@ export function ProductSale() {
                   placeholder="Franca"
                   width="290px"
                   value={city}
+                  onChange={(event) => setCity(event.target.value)}
                 />
               </InputsArea>
               <InputsArea>
@@ -237,6 +245,7 @@ export function ProductSale() {
                   placeholder="SP"
                   width="90px"
                   value={state}
+                  onChange={(event) => setState(event.target.value)}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -264,6 +273,9 @@ export function ProductSale() {
                   placeholder="R$8283,90"
                   width="190px"
                   value={totalValueFormated}
+                  onChange={(event) =>
+                    setTotalValueFormated(event.target.value)
+                  }
                 />
               </InputsArea>
               <InputsArea>
@@ -273,6 +285,9 @@ export function ProductSale() {
                   placeholder="10%"
                   width="190px"
                   value={discountPercentageFormated}
+                  onChange={(event) =>
+                    setDiscountPercentageFormated(event.target.value)
+                  }
                 />
               </InputsArea>
               <InputsArea>
@@ -282,6 +297,9 @@ export function ProductSale() {
                   placeholder="R$828,39"
                   width="190px"
                   value={discountValueFormated}
+                  onChange={(event) =>
+                    setDiscountValueFormated(event.target.value)
+                  }
                 />
               </InputsArea>
               <InputsArea>
@@ -291,6 +309,9 @@ export function ProductSale() {
                   placeholder="R$7455,51"
                   width="190px"
                   value={liquidValueFormated}
+                  onChange={(event) =>
+                    setliquidValueFormated(event.target.value)
+                  }
                 />
               </InputsArea>
             </LineCustomerInformations>

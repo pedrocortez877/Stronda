@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { Container, TextArea, Text, Icon, ButtonDeleteProduct } from "./styles";
 import CloseImage from "../../assets/close.png";
@@ -7,11 +7,15 @@ import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
 
 export function ItemList({ product }) {
   const { products, setProducts } = useContext(ProductOfASaleContext);
+  const [formatedValue, setFormatedValue] = useState("");
+  const [formatedTotal, setFormatedTotal] = useState("");
 
-  if (product) {
-    product.Value = product.Value.toString().replace(".", ",");
-    product.Total = product.Total.toString().replace(".", ",");
-  }
+  useEffect(() => {
+    if (product) {
+      setFormatedValue(product.Value.toString().replace(".", ","));
+      setFormatedTotal(product.Total.toString().replace(".", ","));
+    }
+  }, [product]);
 
   function handleClickDeleteProduct() {
     setProducts(
@@ -32,13 +36,13 @@ export function ItemList({ product }) {
             <Text>{product.Brand}</Text>
           </TextArea>
           <TextArea>
-            <Text>R${product.Value}</Text>
+            <Text>R${formatedValue}</Text>
           </TextArea>
           <TextArea>
             <Text>{product.Quantity}</Text>
           </TextArea>
           <TextArea>
-            <Text>R${product.Total}</Text>
+            <Text>R${formatedTotal}</Text>
           </TextArea>
           <ButtonDeleteProduct onClick={handleClickDeleteProduct}>
             <Icon src={CloseImage} />
