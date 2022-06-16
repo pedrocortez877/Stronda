@@ -4,14 +4,16 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  border-bottom: 1px solid var(--primary20);
+
+  flex: 1;
 `;
 
 export const TextArea = styled.div`
   flex: 1;
 
   text-align: center;
-
-  border-bottom: 1px solid var(--primary20);
 `;
 
 export const Text = styled.p`
@@ -30,9 +32,9 @@ export const ButtonDeleteProduct = styled.button`
   border: none;
   text-align: center;
 
-  border-bottom: 1px solid var(--primary20);
-
   background: none;
 
   cursor: pointer;
+
+  flex: 1;
 `;

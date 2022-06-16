@@ -198,6 +198,6 @@ export const ButtonAddProduct = styled.button`
 `;
 
 export const IconAddProduct = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 `;

@@ -5,8 +5,7 @@ import CloseImage from "../../assets/close.png";
 
 import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
 
-export function ItemList(props) {
-  const { product } = props;
+export function ItemList({ product }) {
   const { products, setProducts } = useContext(ProductOfASaleContext);
 
   if (product) {
