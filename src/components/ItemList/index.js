@@ -12,8 +12,8 @@ export function ItemList({ product }) {
 
   useEffect(() => {
     if (product) {
-      setFormatedValue(product.Value.toString().replace(".", ","));
-      setFormatedTotal(product.Total.toString().replace(".", ","));
+      setFormatedValue(product.Value.toFixed(2).toString().replace(".", ","));
+      setFormatedTotal(product.Total.toFixed(2).toString().replace(".", ","));
     }
   }, [product]);
 
