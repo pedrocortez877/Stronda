@@ -1,23 +1,47 @@
-import { Container } from "./styles";
+import { Container, ContainerMoney } from "./styles";
 
-export function Input({ isPassword, width, placeholder, onChange, value }) {
+import masks from "../../constants/masks";
+import { useEffect, useState} from "react";
+
+export function Input({ isPassword, isMoney, width, placeholder, onChange, value, maskIndex }) {
+  const [mask, setMask] = useState("");
+  useEffect(() => {
+    if(maskIndex !== "none"){
+      const maskInformed = masks.find(item => item.index === maskIndex);
+      setMask(maskInformed.mask);
+    }
+  }, []);
   return (
     <>
       {isPassword ? (
         <Container
           type="password"
-          Width={width}
+          width={width}
           placeholder={placeholder}
           onChange={onChange}
           value={value}
         />
       ) : (
-        <Container
-          Width={width}
-          placeholder={placeholder}
-          onChange={onChange}
-          value={value}
-        />
+        isMoney ?
+        (
+          <ContainerMoney
+            width={width}
+            placeholder={placeholder}
+            onChange={onChange}
+            value={value}
+            prefix={"R$"}
+          />
+        )
+        :
+        (
+          <Container
+            width={width}
+            placeholder={placeholder}
+            onChange={onChange}
+            value={value}
+            mask={mask}
+          />
+        )
       )}
     </>
   );

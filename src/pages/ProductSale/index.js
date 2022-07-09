@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { Sidebar } from "../../components/Sidebar";
 import { Input } from "../../components/Input";
@@ -11,6 +11,7 @@ import { useModal } from "../../hooks/useModal";
 import api from "../../configs/api";
 
 import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
+import ProductSaleContext from "../../contexts/ProductSaleContext";
 
 import IconPlus from "../../assets/plus.png";
 
@@ -37,6 +38,7 @@ import {
 
 export function ProductSale() {
   const { products } = useContext(ProductOfASaleContext);
+  const { totalValue } = useContext(ProductSaleContext);
 
   const [customerType, setcustomerType] = useState("NATURAL_PERSON");
   const [documentNumber, setDocumentNumber] = useState("");
@@ -49,7 +51,6 @@ export function ProductSale() {
   const [neighborhood, setNeighborhood] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [totalValue, setTotalValue] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountValue, setDiscountValue] = useState(0);
   const [liquidValue, setliquidValue] = useState(0);
@@ -61,6 +62,20 @@ export function ProductSale() {
   const [liquidValueFormated, setliquidValueFormated] = useState("");
 
   const [open, toggle] = useModal();
+
+  useEffect(() => {
+    if (totalValue) {
+      setTotalValueFormated(totalValue.toFixed(2).toString().replace(".", ","));
+      if(discountPercentage === 0 && discountValue === 0){
+        setDiscountPercentageFormated("0");
+        setDiscountValueFormated("0");
+        setliquidValueFormated(totalValue.toFixed(2).toString().replace(".", ","));
+      }
+    }else{
+      setTotalValueFormated("");
+      setliquidValueFormated("");
+    }
+  }, [totalValue]);
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -141,6 +156,8 @@ export function ProductSale() {
                   width="180px"
                   value={documentNumber}
                   onChange={(event) => setDocumentNumber(event.target.value)}
+                  maskIndex="cpf"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -159,6 +176,8 @@ export function ProductSale() {
                   width="290px"
                   value={customerName}
                   onChange={(event) => setCustomerName(event.target.value)}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -169,6 +188,8 @@ export function ProductSale() {
                   width="250px"
                   value={phoneNumber}
                   onChange={(event) => setPhoneNumber(event.target.value)}
+                  maskIndex="phone"
+                  isMoney={false}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -184,6 +205,8 @@ export function ProductSale() {
                   width="180px"
                   value={zipCode}
                   onChange={handleChangeZipCode}
+                  maskIndex="zipcode"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -194,6 +217,8 @@ export function ProductSale() {
                   width="350px"
                   value={street}
                   onChange={() => {}}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -204,6 +229,8 @@ export function ProductSale() {
                   width="90px"
                   value={streetNumber}
                   onChange={(event) => setStreetNumber(event.target.value)}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -214,6 +241,8 @@ export function ProductSale() {
                   width="250px"
                   value={complement}
                   onChange={(event) => setComplement(event.target.value)}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -226,6 +255,8 @@ export function ProductSale() {
                   width="330px"
                   value={neighborhood}
                   onChange={(event) => setNeighborhood(event.target.value)}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -236,6 +267,8 @@ export function ProductSale() {
                   width="290px"
                   value={city}
                   onChange={(event) => setCity(event.target.value)}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -246,6 +279,8 @@ export function ProductSale() {
                   width="90px"
                   value={state}
                   onChange={(event) => setState(event.target.value)}
+                  maskIndex="none"
+                  isMoney={false}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -276,6 +311,8 @@ export function ProductSale() {
                   onChange={(event) =>
                     setTotalValueFormated(event.target.value)
                   }
+                  maskIndex="none"
+                  isMoney
                 />
               </InputsArea>
               <InputsArea>
@@ -288,6 +325,8 @@ export function ProductSale() {
                   onChange={(event) =>
                     setDiscountPercentageFormated(event.target.value)
                   }
+                  maskIndex="none"
+                  isMoney
                 />
               </InputsArea>
               <InputsArea>
@@ -300,6 +339,8 @@ export function ProductSale() {
                   onChange={(event) =>
                     setDiscountValueFormated(event.target.value)
                   }
+                  maskIndex="none"
+                  isMoney
                 />
               </InputsArea>
               <InputsArea>
@@ -312,6 +353,8 @@ export function ProductSale() {
                   onChange={(event) =>
                     setliquidValueFormated(event.target.value)
                   }
+                  maskIndex="none"
+                  isMoney
                 />
               </InputsArea>
             </LineCustomerInformations>

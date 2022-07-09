@@ -5,17 +5,9 @@ const ProductOfASaleContext = createContext({});
 export function ProductOfASaleContextProvider({ children }) {
   const [products, setProducts] = useState([]);
 
-  function addProduct(product) {
-    setProducts((products) => [...products, product]);
-  }
-
-  function removeProduct(product) {
-    setProducts(products.filter((item) => item.Id !== product.Id));
-  }
-
   return (
     <ProductOfASaleContext.Provider
-      value={{ products, setProducts, addProduct, removeProduct }}
+      value={{ products, setProducts }}
     >
       {children}
     </ProductOfASaleContext.Provider>

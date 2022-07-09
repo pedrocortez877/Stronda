@@ -4,9 +4,11 @@ import { Container, TextArea, Text, Icon, ButtonDeleteProduct } from "./styles";
 import CloseImage from "../../assets/close.png";
 
 import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
+import ProductSaleContext from "../../contexts/ProductSaleContext";
 
 export function ItemList({ product }) {
   const { products, setProducts } = useContext(ProductOfASaleContext);
+  const { changeTotalValue } = useContext(ProductSaleContext);
   const [formatedValue, setFormatedValue] = useState("");
   const [formatedTotal, setFormatedTotal] = useState("");
 
@@ -23,6 +25,7 @@ export function ItemList({ product }) {
         return object.Id !== product.Id;
       })
     );
+    changeTotalValue(-product.Total);
   }
 
   return (

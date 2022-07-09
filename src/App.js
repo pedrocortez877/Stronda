@@ -4,6 +4,7 @@ import { Operations } from "./pages/Operations";
 import { ProductSale } from "./pages/ProductSale";
 
 import { ProductOfASaleContextProvider } from "./contexts/ProductOfASaleContext";
+import { ProductSaleContextProvider } from "./contexts/ProductSaleContext";
 
 function App() {
   return (
@@ -13,9 +14,11 @@ function App() {
         <Route
           path="/productSale"
           element={
-            <ProductOfASaleContextProvider>
-              <ProductSale />
-            </ProductOfASaleContextProvider>
+            <ProductSaleContextProvider>
+              <ProductOfASaleContextProvider>
+                <ProductSale />
+              </ProductOfASaleContextProvider>
+            </ProductSaleContextProvider>
           }
         />
       </Routes>

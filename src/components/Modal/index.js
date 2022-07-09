@@ -14,6 +14,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { sxContainer, sxTitleContainer, theme } from "./styles";
 
 import ProductOfASaleContext from "../../contexts/ProductOfASaleContext";
+import ProductSaleContext from "../../contexts/ProductSaleContext";
 
 export function ModalComponent({ open, toggle }) {
   const [databaseProducts] = useState([
@@ -58,6 +59,7 @@ export function ModalComponent({ open, toggle }) {
   const [inputAutocomplete, setInputAutocomplete] = useState("");
 
   const { products, setProducts } = useContext(ProductOfASaleContext);
+  const { changeTotalValue } = useContext(ProductSaleContext);
 
   useEffect(() => {
     if (value !== 0) {
@@ -107,9 +109,12 @@ export function ModalComponent({ open, toggle }) {
               Quantity: product.Quantity + Number(quantity),
               Total: product.Total + Number(total),
             };
-          } else return product;
+          } else{
+            return product;
+          }
         })
       );
+      changeTotalValue(Number(total));
     } else {
       Object.assign(selectedProduct, {
         Quantity: Number(quantity),
@@ -117,6 +122,7 @@ export function ModalComponent({ open, toggle }) {
       });
 
       setProducts([...products, selectedProduct]);
+      changeTotalValue(Number(total));
     }
   }
 
