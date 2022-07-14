@@ -59,23 +59,44 @@ export function ProductSale() {
   const [discountPercentageFormated, setDiscountPercentageFormated] =
     useState("");
   const [discountValueFormated, setDiscountValueFormated] = useState("");
-  const [liquidValueFormated, setliquidValueFormated] = useState("");
+  const [liquidValueFormated, setLiquidValueFormated] = useState("");
 
   const [open, toggle] = useModal();
 
   useEffect(() => {
     if (totalValue) {
-      setTotalValueFormated(totalValue.toFixed(2).toString().replace(".", ","));
+      setTotalValueFormated(totalValue.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
       if(discountPercentage === 0 && discountValue === 0){
         setDiscountPercentageFormated("0");
         setDiscountValueFormated("0");
-        setliquidValueFormated(totalValue.toFixed(2).toString().replace(".", ","));
+        setliquidValue(totalValue - discountValue);
+        setLiquidValueFormated((totalValue - discountValue));
       }
     }else{
       setTotalValueFormated("");
-      setliquidValueFormated("");
+      setLiquidValueFormated("");
     }
   }, [totalValue]);
+
+  useEffect(() => {
+    if(discountPercentage !== 0 && discountPercentage !== null){
+      setDiscountPercentageFormated(discountPercentage.toString());
+    }else{
+      setDiscountPercentageFormated("");
+    }
+
+    if(discountValue !== 0 && discountValue !== null){
+      setDiscountValueFormated(discountValue);
+    }else{
+      setDiscountValueFormated("");
+    }
+
+    if(liquidValue !== 0 && liquidValue !== null){
+      setLiquidValueFormated(liquidValue);
+    }else{
+      setLiquidValueFormated("");
+    }
+  }, [discountPercentage, discountValue, liquidValue]);
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -85,9 +106,11 @@ export function ProductSale() {
   async function handleChangeZipCode(event) {
     const { value } = event.target;
 
-    setZipCode(value);
+    const myZipCode = value.replace("_____", "").replace("-", "").replace("___", "").replace("_", "");
 
-    if (value.replace("-", "").length === 8) {
+    setZipCode(myZipCode);
+
+    if (myZipCode.length === 8) {
       const responseGetAddressWithZipCode = await api.get(
         `https://viacep.com.br/ws/${value}/json/`
       );
@@ -101,6 +124,46 @@ export function ProductSale() {
         setCity(localidade);
         setState(uf);
       }
+    }
+  }
+
+  function handleSaleValue(value, type){
+    console.log(value);
+    let discount = type === "percentage" ? Number(value.replace("%", "")) : Number(value);
+    switch(type){
+      case "percentage":
+        if(discount > 40){
+          discount = 40;
+        }
+        setDiscountValue(Number(totalValue * (discount / 100)));
+        setliquidValue(Number(totalValue - (totalValue * (discount / 100))));
+        setDiscountPercentage(discount);
+      break;
+      case "discount":
+        console.log(discount);
+        setDiscountPercentage(Number((discount * 100) / totalValue));
+        setDiscountValue(Number(discount));
+        setliquidValue(Number(totalValue - discount));
+      break;
+      case "liquid":
+        setDiscountPercentage(Number(((totalValue - discount) * 100) / totalValue));
+        setDiscountValue(Number(totalValue - discount));
+        setliquidValue(Number(discount));
+      break;
+    }
+  }
+
+  function onBlurValueFields(target){
+    switch(target){
+      case "percentage":
+        
+      break;
+      case "discount":
+        
+      break;
+      case "liquid":
+        
+      break;
     }
   }
 
@@ -158,6 +221,7 @@ export function ProductSale() {
                   onChange={(event) => setDocumentNumber(event.target.value)}
                   maskIndex="cpf"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -178,6 +242,7 @@ export function ProductSale() {
                   onChange={(event) => setCustomerName(event.target.value)}
                   maskIndex="none"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -190,6 +255,7 @@ export function ProductSale() {
                   onChange={(event) => setPhoneNumber(event.target.value)}
                   maskIndex="phone"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -207,6 +273,7 @@ export function ProductSale() {
                   onChange={handleChangeZipCode}
                   maskIndex="zipcode"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -219,6 +286,7 @@ export function ProductSale() {
                   onChange={() => {}}
                   maskIndex="none"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -231,6 +299,7 @@ export function ProductSale() {
                   onChange={(event) => setStreetNumber(event.target.value)}
                   maskIndex="none"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -243,6 +312,7 @@ export function ProductSale() {
                   onChange={(event) => setComplement(event.target.value)}
                   maskIndex="none"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -269,6 +339,7 @@ export function ProductSale() {
                   onChange={(event) => setCity(event.target.value)}
                   maskIndex="none"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
               <InputsArea>
@@ -281,6 +352,7 @@ export function ProductSale() {
                   onChange={(event) => setState(event.target.value)}
                   maskIndex="none"
                   isMoney={false}
+                  disabled={false}
                 />
               </InputsArea>
             </LineCustomerInformations>
@@ -313,6 +385,8 @@ export function ProductSale() {
                   }
                   maskIndex="none"
                   isMoney
+                  disabled={true}
+                  onBlur={() => {}}
                 />
               </InputsArea>
               <InputsArea>
@@ -323,10 +397,12 @@ export function ProductSale() {
                   width="190px"
                   value={discountPercentageFormated}
                   onChange={(event) =>
-                    setDiscountPercentageFormated(event.target.value)
+                    handleSaleValue(event.target.value, "percentage")
                   }
                   maskIndex="none"
-                  isMoney
+                  isMoney={false}
+                  disabled={false}
+                  onBlur={() => onBlurValueFields("percentage")}
                 />
               </InputsArea>
               <InputsArea>
@@ -337,10 +413,12 @@ export function ProductSale() {
                   width="190px"
                   value={discountValueFormated}
                   onChange={(event) =>
-                    setDiscountValueFormated(event.target.value)
+                    handleSaleValue(event.target.value, "discount")
                   }
                   maskIndex="none"
                   isMoney
+                  disabled={false}
+                  onBlur={() => onBlurValueFields("discount")}
                 />
               </InputsArea>
               <InputsArea>
@@ -351,10 +429,11 @@ export function ProductSale() {
                   width="190px"
                   value={liquidValueFormated}
                   onChange={(event) =>
-                    setliquidValueFormated(event.target.value)
+                    handleSaleValue(event.target.value, "liquid")
                   }
                   maskIndex="none"
                   isMoney
+                  onBlur={() => onBlurValueFields("liquid")}
                 />
               </InputsArea>
             </LineCustomerInformations>

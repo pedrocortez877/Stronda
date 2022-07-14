@@ -1,9 +1,9 @@
-import { Container, ContainerMoney } from "./styles";
+import { Container } from "./styles";
 
 import masks from "../../constants/masks";
 import { useEffect, useState} from "react";
 
-export function Input({ isPassword, isMoney, width, placeholder, onChange, value, maskIndex }) {
+export function Input({ isPassword, width, placeholder, onChange, value, maskIndex, disabled, onBlur }) {
   const [mask, setMask] = useState("");
   useEffect(() => {
     if(maskIndex !== "none"){
@@ -22,27 +22,17 @@ export function Input({ isPassword, isMoney, width, placeholder, onChange, value
           value={value}
         />
       ) : (
-        isMoney ?
-        (
-          <ContainerMoney
-            width={width}
-            placeholder={placeholder}
-            onChange={onChange}
-            value={value}
-            prefix={"R$"}
-          />
-        )
-        :
-        (
           <Container
             width={width}
             placeholder={placeholder}
             onChange={onChange}
             value={value}
             mask={mask}
+            disabled={disabled}
+            onBlur={onBlur}
           />
         )
-      )}
+      }
     </>
   );
 }
