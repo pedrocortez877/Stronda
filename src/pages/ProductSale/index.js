@@ -53,7 +53,7 @@ export function ProductSale() {
   const [state, setState] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountValue, setDiscountValue] = useState(0);
-  const [liquidValue, setliquidValue] = useState(0);
+  const [liquidValue, setLiquidValue] = useState(0);
 
   const [totalValueFormated, setTotalValueFormated] = useState("");
   const [discountPercentageFormated, setDiscountPercentageFormated] =
@@ -61,42 +61,43 @@ export function ProductSale() {
   const [discountValueFormated, setDiscountValueFormated] = useState("");
   const [liquidValueFormated, setLiquidValueFormated] = useState("");
 
+  const [inputDisabled, setInputDisabled] = useState(true);
+
   const [open, toggle] = useModal();
 
   useEffect(() => {
     if (totalValue) {
       setTotalValueFormated(totalValue.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+      setInputDisabled(false);
       if(discountPercentage === 0 && discountValue === 0){
         setDiscountPercentageFormated("0");
         setDiscountValueFormated("0");
-        setliquidValue(totalValue - discountValue);
-        setLiquidValueFormated((totalValue - discountValue));
+        setLiquidValue(totalValue - discountValue);
+        setLiquidValueFormated((totalValue - discountValue).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
       }
     }else{
       setTotalValueFormated("");
       setLiquidValueFormated("");
+      setDiscountPercentageFormated("");
+      setDiscountValueFormated("");
+      setInputDisabled(true);
     }
   }, [totalValue]);
 
   useEffect(() => {
-    if(discountPercentage !== 0 && discountPercentage !== null){
-      setDiscountPercentageFormated(discountPercentage.toString());
-    }else{
-      setDiscountPercentageFormated("");
+    if(Number(discountPercentage) > 40){
+      setDiscountPercentage(40);
+      setDiscountPercentageFormated("40");
     }
+  }, [discountPercentage]);
 
-    if(discountValue !== 0 && discountValue !== null){
-      setDiscountValueFormated(discountValue);
-    }else{
-      setDiscountValueFormated("");
+  useEffect(() => {
+    const maxDiscountValue = (40 * totalValue) / 100;
+    if(Number(discountValue) > maxDiscountValue){
+      setDiscountValue(maxDiscountValue);
+      setDiscountValueFormated(maxDiscountValue.toString());
     }
-
-    if(liquidValue !== 0 && liquidValue !== null){
-      setLiquidValueFormated(liquidValue);
-    }else{
-      setLiquidValueFormated("");
-    }
-  }, [discountPercentage, discountValue, liquidValue]);
+  }, [discountValue]);
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
@@ -127,42 +128,60 @@ export function ProductSale() {
     }
   }
 
-  function handleSaleValue(value, type){
-    console.log(value);
-    let discount = type === "percentage" ? Number(value.replace("%", "")) : Number(value);
-    switch(type){
-      case "percentage":
-        if(discount > 40){
-          discount = 40;
-        }
-        setDiscountValue(Number(totalValue * (discount / 100)));
-        setliquidValue(Number(totalValue - (totalValue * (discount / 100))));
-        setDiscountPercentage(discount);
-      break;
-      case "discount":
-        console.log(discount);
-        setDiscountPercentage(Number((discount * 100) / totalValue));
-        setDiscountValue(Number(discount));
-        setliquidValue(Number(totalValue - discount));
-      break;
-      case "liquid":
-        setDiscountPercentage(Number(((totalValue - discount) * 100) / totalValue));
-        setDiscountValue(Number(totalValue - discount));
-        setliquidValue(Number(discount));
-      break;
+  function onBlurValueFields(target, type){
+    if(type === "blur"){
+      switch(target){
+        case "percentage":
+          setDiscountValue(Number(totalValue * (discountPercentage / 100)));
+          setDiscountValueFormated((totalValue * (discountPercentage / 100)).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+          setLiquidValue(Number(totalValue - (totalValue * (discountPercentage / 100))));
+          setLiquidValueFormated((totalValue - (totalValue * (discountPercentage / 100))).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+          setDiscountPercentageFormated(discountPercentage.toFixed(2) + "%");
+        break;
+        case "discount":
+          setLiquidValue(Number(totalValue - discountValue));
+          setLiquidValueFormated((totalValue - discountValue).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+          setDiscountPercentage(Number((discountValue * 100) / totalValue));
+          setDiscountPercentageFormated(((discountValue * 100) / totalValue).toFixed(2) + "%");
+          setDiscountValueFormated(discountValue.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        break;
+        case "liquid":
+          setDiscountPercentage(Number(((totalValue - liquidValue) * 100) / totalValue));
+          setDiscountPercentageFormated((((totalValue - liquidValue) * 100) / totalValue).toFixed(2) + "%");
+          setDiscountValue(Number(totalValue - liquidValue));
+          setDiscountValueFormated((totalValue - liquidValue).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+          setLiquidValueFormated(liquidValue.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        break;
+      }
+    }else{
+      switch(target){
+        case "percentage":
+          setDiscountPercentageFormated(Number(discountPercentage) !== 0 ? Number(discountPercentage.toFixed(2)) : "");
+        break;
+        case "discount":
+          setDiscountValueFormated(Number(discountValue) !== 0 ? Number(discountValue.toFixed(2)) : "");
+        break;
+        case "liquid":
+          setLiquidValueFormated(Number(liquidValue) !== 0 ? Number(liquidValue.toFixed(2)) : "");
+        break;
+      }
     }
   }
 
-  function onBlurValueFields(target){
-    switch(target){
-      case "percentage":
-        
+  function handleChangeDiscountValues(value, type){
+    const formatedValue = value.replace(",", ".");
+    switch(type){
+      case "percentage": 
+        setDiscountPercentage(isNaN(Number(formatedValue)) ? discountPercentage : Number(formatedValue));
+        setDiscountPercentageFormated(formatedValue);
       break;
-      case "discount":
-        
+      case "discountValue":
+        setDiscountValue(isNaN(Number(formatedValue)) ? discountValue : Number(formatedValue));
+        setDiscountValueFormated(formatedValue);
       break;
-      case "liquid":
-        
+      case "liquidValue": 
+        setLiquidValue(isNaN(Number(formatedValue)) ? liquidValue : Number(formatedValue));
+        setLiquidValueFormated(formatedValue);
       break;
     }
   }
@@ -396,13 +415,12 @@ export function ProductSale() {
                   placeholder="10%"
                   width="190px"
                   value={discountPercentageFormated}
-                  onChange={(event) =>
-                    handleSaleValue(event.target.value, "percentage")
-                  }
+                  onChange={(event) => handleChangeDiscountValues(event.target.value, "percentage")}
                   maskIndex="none"
                   isMoney={false}
-                  disabled={false}
-                  onBlur={() => onBlurValueFields("percentage")}
+                  disabled={inputDisabled}
+                  onBlur={() => onBlurValueFields("percentage", "blur")}
+                  onFocus={() => onBlurValueFields("percentage", "focus")}
                 />
               </InputsArea>
               <InputsArea>
@@ -412,13 +430,12 @@ export function ProductSale() {
                   placeholder="R$828,39"
                   width="190px"
                   value={discountValueFormated}
-                  onChange={(event) =>
-                    handleSaleValue(event.target.value, "discount")
-                  }
+                  onChange={(event) => handleChangeDiscountValues(event.target.value, "discountValue")}
                   maskIndex="none"
                   isMoney
-                  disabled={false}
-                  onBlur={() => onBlurValueFields("discount")}
+                  disabled={inputDisabled}
+                  onBlur={() => onBlurValueFields("discount", "blur")}
+                  onFocus={() => onBlurValueFields("discount", "focus")}
                 />
               </InputsArea>
               <InputsArea>
@@ -428,12 +445,12 @@ export function ProductSale() {
                   placeholder="R$7455,51"
                   width="190px"
                   value={liquidValueFormated}
-                  onChange={(event) =>
-                    handleSaleValue(event.target.value, "liquid")
-                  }
+                  onChange={(event) => handleChangeDiscountValues(event.target.value, "liquidValue")}
                   maskIndex="none"
                   isMoney
-                  onBlur={() => onBlurValueFields("liquid")}
+                  onBlur={() => onBlurValueFields("liquid", "blur")}
+                  onFocus={() => onBlurValueFields("liquid", "focus")}
+                  disabled={true}
                 />
               </InputsArea>
             </LineCustomerInformations>

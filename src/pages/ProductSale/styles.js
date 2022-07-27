@@ -25,6 +25,10 @@ export const SalesDashboard = styled.div`
   border-radius: 17px;
 
   align-items: center;
+
+  @media(max-width: 1600px) {
+    width: 90%;
+  }
 `;
 
 export const SalesDashboardTitleArea = styled.div`

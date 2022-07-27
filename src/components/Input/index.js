@@ -3,7 +3,7 @@ import { Container } from "./styles";
 import masks from "../../constants/masks";
 import { useEffect, useState} from "react";
 
-export function Input({ isPassword, width, placeholder, onChange, value, maskIndex, disabled, onBlur }) {
+export function Input({ isPassword, width, placeholder, onChange, value, maskIndex, disabled, onBlur, onFocus }) {
   const [mask, setMask] = useState("");
   useEffect(() => {
     if(maskIndex !== "none"){
@@ -30,6 +30,7 @@ export function Input({ isPassword, width, placeholder, onChange, value, maskInd
             mask={mask}
             disabled={disabled}
             onBlur={onBlur}
+            onFocus={onFocus}
           />
         )
       }
