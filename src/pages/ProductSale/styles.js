@@ -27,7 +27,7 @@ export const SalesDashboard = styled.div`
   align-items: center;
 
   @media(max-width: 1600px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 
